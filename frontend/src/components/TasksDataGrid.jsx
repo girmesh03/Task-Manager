@@ -77,25 +77,22 @@ const TasksDataGrid = () => {
     ),
   };
 
-  if (!tasks || tasks.length === 0) {
-    return (
-      <Box sx={{ p: 2, textAlign: "center" }}>
-        <Typography variant="h6" gutterBottom>
-          No tasks found
-        </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenDialog}
-        >
-          Add Task
-        </Button>
-      </Box>
-    );
-  }
-
   return (
     <Box sx={{ width: "100%", height: 400 }}>
+      {(!tasks || tasks.length === 0) && (
+        <Box sx={{ p: 2, textAlign: "center" }}>
+          <Typography variant="h6" gutterBottom>
+            No tasks found
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenDialog}
+          >
+            Add Task
+          </Button>
+        </Box>
+      )}
       <CreateUpdateTask
         open={isDialogOpen}
         handleClose={handleCloseDialog}

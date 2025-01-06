@@ -8,6 +8,10 @@ import corsOptions from "./config/corsOptions.js";
 import globalErrorHandler from "./controllers/errorController.js";
 import CustomError from "./utils/CustomError.js";
 
+import AuthRoutes from "./routes/AuthRoutes.js";
+import UserRoutes from "./routes/UserRoutes.js";
+import TaskRoutes from "./routes/TaskRoutes.js";
+
 const app = express();
 
 app.use(cors(corsOptions));
@@ -16,9 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-app.use("/api", (req, res, next) => {
-  res.status(200).json({ msg: "API is running" });
-});
+app.use("/api/auth", AuthRoutes);
+app.use("/api/users", UserRoutes);
+app.use("/api/tasks", TaskRoutes);
 
 app.all("*", (req, res, next) => {
   next(new CustomError(`Can't find ${req.originalUrl} on this server!`, 404));

@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 
 import corsOptions from "./config/corsOptions.js";
 import globalErrorHandler from "./controllers/errorController.js";
-import CustomError from "./utils/CustomError.js";
+import CustomError from "../backend/utils/CustomError.js";
 
 import AuthRoutes from "./routes/AuthRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";

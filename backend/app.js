@@ -3,8 +3,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import helmet from "helmet"; // Security middleware
-import mongoSanitize from "express-mongo-sanitize"; // Security middleware
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 import apiRoutes from "./routes/index.js";
 import corsOptions from "./config/corsOptions.js";
@@ -13,35 +13,42 @@ import CustomError from "./errorHandler/CustomError.js";
 
 const app = express();
 
-// --- Core Middleware ---
-// Set security HTTP headers
+// === 1. Global Middleware ===
+
+// Set essential security HTTP headers.
 app.use(helmet());
-// Enable CORS with specific options
+// Enable CORS with whitelisted origins.
 app.use(cors(corsOptions));
-// Parse JSON bodies
-app.use(express.json({ limit: "10kb" })); // Smaller limit for security
-// Parse URL-encoded bodies
+// Parse JSON bodies with a reasonable payload limit.
+app.use(express.json({ limit: "10kb" }));
+// Parse URL-encoded bodies.
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-// Parse cookies
+// Parse cookies from incoming requests.
 app.use(cookieParser());
-// Sanitize MongoDB query data
+// Sanitize user-supplied data to prevent MongoDB operator injection.
 app.use(mongoSanitize());
 
-// HTTP request logger in development
+// Use HTTP request logger only in development for cleaner production logs.
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// --- API Routes ---
+// === 2. API Routes ===
+// All API routes are prefixed with `/api/v1`.
 app.use("/api/v1", apiRoutes);
 
-// --- Error Handling ---
-// Catch-all for unhandled routes
+// === 3. Error Handling ===
+// A catch-all middleware for any requests to routes that do not exist.
 app.all("*", (req, res, next) => {
-  next(new CustomError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(
+    new CustomError(
+      `The requested URL ${req.originalUrl} was not found on this server.`,
+      404
+    )
+  );
 });
 
-// Global error handling middleware
+// The global error handling middleware that catches all errors passed to `next()`.
 app.use(globalErrorHandler);
 
 export default app;

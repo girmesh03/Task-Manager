@@ -1,0 +1,30 @@
+export default {
+  testEnvironment: 'node',
+  transform: {},
+
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  testMatch: ['**/__tests__/**/*.test.js', '**/__tests__/**/*.property.test.js'],
+  collectCoverageFrom: [
+    'app.js',
+    'server.js',
+    'config/**/*.js',
+    'controllers/**/*.js',
+    'middlewares/**/*.js',
+    'models/**/*.js',
+    'routes/**/*.js',
+    'services/**/*.js',
+    'utils/**/*.js',
+    '!**/node_modules/**',
+    '!**/__tests__/**',
+    '!**/coverage/**',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
+  globalSetup: './__tests__/globalSetup.js',
+  globalTeardown: './__tests__/globalTeardown.js',
+  setupFilesAfterEnv: ['./__tests__/setup.js'],
+  testTimeout: 30000,
+  maxWorkers: 1,
+};

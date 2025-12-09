@@ -66,10 +66,14 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/api', apiLimiter);
 }
 
-// Routes (Placeholder for now)
+// Routes
+import routes from './routes/index.js';
+
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+app.use('/api', routes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

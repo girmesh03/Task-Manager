@@ -122,3 +122,56 @@ export const INDUSTRIES = [
   'Food & Beverage',
   'Other',
 ];
+
+// Routes
+export const ROUTES = {
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  DASHBOARD: '/dashboard',
+  USERS: '/users',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
+};
+
+// UI Messages
+export const UI_MESSAGES = {
+  ERRORS: {
+    SOMETHING_WENT_WRONG: 'Something went wrong. Please try again.',
+    NETWORK_ERROR: 'Network error. Please check your connection.',
+    UNAUTHORIZED: 'You are not authorized to perform this action.',
+    NOT_FOUND: 'The requested resource was not found.',
+  },
+  SUCCESS: {
+    LOGIN: 'Login successful!',
+    LOGOUT: 'Logout successful!',
+    REGISTER: 'Registration successful! Please login.',
+    UPDATE: 'Updated successfully!',
+    DELETE: 'Deleted successfully!',
+    CREATE: 'Created successfully!',
+  },
+  PLACEHOLDERS: {
+    SELECT_OPTION: 'Select an option...',
+    SEARCH: 'Search...',
+    ENTER_TEXT: 'Enter text...',
+  },
+};
+
+// Convenience exports for backwards compatibility
+export const MIN_PASSWORD_LENGTH = LENGTH_LIMITS.PASSWORD_MIN;
+export const MAX_POSITION_LENGTH = LENGTH_LIMITS.POSITION_MAX;
+export const MAX_DEPT_NAME_LENGTH = LENGTH_LIMITS.DEPT_NAME_MAX;
+export const MAX_DEPT_DESCRIPTION_LENGTH = LENGTH_LIMITS.DESCRIPTION_MAX;
+export const MAX_ORG_NAME_LENGTH = LENGTH_LIMITS.ORG_NAME_MAX;
+export const MAX_ORG_DESCRIPTION_LENGTH = LENGTH_LIMITS.DESCRIPTION_MAX;
+export const MAX_EMAIL_LENGTH = LENGTH_LIMITS.EMAIL_MAX;
+export const MAX_USER_NAME_LENGTH = LENGTH_LIMITS.USER_NAME_MAX;
+export const MAX_ADDRESS_LENGTH = LENGTH_LIMITS.ADDRESS_MAX;
+
+// Alias for INDUSTRIES
+export const VALID_INDUSTRIES = INDUSTRIES;
+
+// Validation Patterns
+export const PHONE_REGEX = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;

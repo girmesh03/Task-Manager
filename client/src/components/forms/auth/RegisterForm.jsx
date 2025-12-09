@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useForm, FormProvider } from "react-hook-form";
 import { toast } from "react-toastify";
-import { handleRTKError } from "../../../utils/errorHandler";
 import { ROUTES, UI_MESSAGES } from "../../../utils/constants.js";
 import {
   Button,
@@ -232,10 +231,7 @@ const RegisterForm = () => {
       navigate(ROUTES.LOGIN, { replace: true });
     } catch (err) {
       // Use global error handler for consistent error handling
-      handleRTKError(
-        err,
-        "Registration failed. Please check your information and try again."
-      );
+
     }
   };
 

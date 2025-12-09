@@ -8,7 +8,10 @@
     "start:prod": "NODE_ENV=production node server.js",
     "dev": "nodemon server.js",
     "server": "nodemon server.js",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules --no-warnings jest"
+    "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:unit": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/unit",
+    "test:integration": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/integration",
+    "test:property": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/property"
   },
   "keywords": [],
   "author": "",

@@ -21,7 +21,6 @@ import LoginIcon from "@mui/icons-material/Login";
 
 import { useAuth } from "../../../hooks/useAuth";
 import MuiTextField from "../../common/MuiTextField";
-import { handleRTKError } from "../../../utils/errorHandler";
 import { MIN_PASSWORD_LENGTH, UI_MESSAGES } from "../../../utils/constants.js";
 
 const LoginForm = () => {
@@ -91,7 +90,6 @@ const LoginForm = () => {
     } catch (err) {
       // console.log("login error", err);
       // Use global error handler for consistent error handling
-      handleRTKError(err, "Login failed. Please check your credentials.");
     }
   };
 

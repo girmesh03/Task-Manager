@@ -46,11 +46,11 @@ export default function softDeletePlugin(schema, options = {}) {
    * Prevent direct manipulation of isDeleted field outside plugin methods
    * This ensures data integrity by forcing use of softDelete/restore methods
    */
-  schema.pre("save", function (next) {
+  schema.pre("save", async function () {
     // Allow if document is being modified by plugin methods
     if (pluginModifiedDocs.has(this)) {
       pluginModifiedDocs.delete(this);
-      return next();
+      return;
     }
 
     // Check if isDeleted is being modified directly
@@ -61,7 +61,7 @@ export default function softDeletePlugin(schema, options = {}) {
         "Direct manipulation of isDeleted field is not allowed. Use softDelete() or restore() methods."
       );
       error.name = "SoftDeleteValidationError";
-      return next(error);
+      throw error;
     }
 
     // Sync deletedAt with isDeleted state for new documents
@@ -74,20 +74,18 @@ export default function softDeletePlugin(schema, options = {}) {
         this.deletedBy = null;
       }
     }
-
-    next();
   });
 
   /**
    * Prevent direct update of isDeleted via updateOne/updateMany
    */
-  schema.pre(["updateOne", "updateMany", "findOneAndUpdate"], function (next) {
+  schema.pre(["updateOne", "updateMany", "findOneAndUpdate"], async function () {
     const update = this.getUpdate();
     const opts = this.getOptions();
 
     // Allow if explicitly marked as plugin operation
     if (opts._softDeletePluginOperation) {
-      return next();
+      return;
     }
 
     // Check for direct isDeleted manipulation in $set
@@ -96,7 +94,7 @@ export default function softDeletePlugin(schema, options = {}) {
         "Direct manipulation of isDeleted field is not allowed. Use softDeleteById/softDeleteMany or restoreById/restoreMany methods."
       );
       error.name = "SoftDeleteValidationError";
-      return next(error);
+      throw error;
     }
 
     // Check for direct isDeleted manipulation at root level
@@ -105,10 +103,8 @@ export default function softDeletePlugin(schema, options = {}) {
         "Direct manipulation of isDeleted field is not allowed. Use softDeleteById/softDeleteMany or restoreById/restoreMany methods."
       );
       error.name = "SoftDeleteValidationError";
-      return next(error);
+      throw error;
     }
-
-    next();
   });
 
   // ==================== QUERY HELPERS ====================
@@ -151,10 +147,10 @@ export default function softDeletePlugin(schema, options = {}) {
   /**
    * Add isDeleted filter to aggregate pipelines
    */
-  schema.pre("aggregate", function (next) {
+  schema.pre("aggregate", async function () {
     // Check options using the correct method for Mongoose aggregation
     const opts = this.options || {};
-    if (opts.withDeleted) return next();
+    if (opts.withDeleted) return;
     const hasIsDeletedMatch = this.pipeline().some((stage) => {
       if (stage.$match && "isDeleted" in stage.$match) return true;
       const sub = stage.$lookup || stage.$facet;
@@ -165,7 +161,6 @@ export default function softDeletePlugin(schema, options = {}) {
     });
     if (!hasIsDeletedMatch)
       this.pipeline().unshift({ $match: { isDeleted: false } });
-    next();
   });
 
   // ==================== HARD DELETE BLOCKING ====================
@@ -173,12 +168,12 @@ export default function softDeletePlugin(schema, options = {}) {
    * Block all hard delete operations
    * Forces use of soft delete methods
    */
-  const blockHardDelete = function (next) {
+  const blockHardDelete = async function () {
     const error = new Error(
-      "Hard delete is disabled. Use softDeleteById/softDeleteMany or set isDeleted=true within a transaction."
+      "Hard deletes are not allowed. Use softDelete methods instead."
     );
     error.name = "HardDeleteBlockedError";
-    next(error);
+    throw error;
   };
 
   schema.pre("deleteOne", { document: false, query: true }, blockHardDelete);
@@ -186,14 +181,12 @@ export default function softDeletePlugin(schema, options = {}) {
   schema.pre("findOneAndDelete", blockHardDelete);
   schema.pre("remove", { document: true, query: false }, blockHardDelete);
 
-  // ==================== INSTANCE METHODS ====================
   /**
    * Soft delete this document
-   * @param {ObjectId} deletedBy - User ID who is deleting
-   * @param {Object} options - Options including session
+   * @param {Object} options - Options including deletedBy and session
    * @returns {Promise<Document>} Updated document
    */
-  schema.methods.softDelete = async function (deletedBy, { session } = {}) {
+  schema.methods.softDelete = async function ({ deletedBy, session } = {}) {
     if (this.isDeleted) {
       throw new Error("Document is already soft-deleted");
     }
@@ -212,11 +205,10 @@ export default function softDeletePlugin(schema, options = {}) {
 
   /**
    * Restore this soft-deleted document
-   * @param {ObjectId} restoredBy - User ID who is restoring
-   * @param {Object} options - Options including session
+   * @param {Object} options - Options including restoredBy and session
    * @returns {Promise<Document>} Updated document
    */
-  schema.methods.restore = async function (restoredBy, { session } = {}) {
+  schema.methods.restore = async function ({ restoredBy, session } = {}) {
     if (!this.isDeleted) {
       throw new Error("Document is not soft-deleted");
     }

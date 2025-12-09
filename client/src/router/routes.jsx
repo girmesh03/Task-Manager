@@ -5,7 +5,6 @@ import DashboardLayout from '../layouts/DashboardLayout.jsx';
 import ProtectedRoute from '../components/auth/ProtectedRoute.jsx';
 import PublicRoute from '../components/auth/PublicRoute.jsx';
 import ErrorBoundary from '../components/common/ErrorBoundary.jsx';
-import RouteError from '../components/common/RouteError.jsx';
 import { LoadingFallback } from '../components/common/MuiLoading.jsx';
 
 const router = createBrowserRouter([
@@ -27,19 +26,55 @@ const router = createBrowserRouter([
           },
           {
             path: 'login',
-            element: (
-              <PublicRoute>
-                <div>Login Page Placeholder</div>
-              </PublicRoute>
-            ),
+            lazy: async () => {
+              const m = await import("../components/forms/auth/LoginForm.jsx");
+              return {
+                Component: () => (
+                  <PublicRoute>
+                    <m.default />
+                  </PublicRoute>
+                ),
+              };
+            },
           },
           {
             path: 'register',
-            element: (
-              <PublicRoute>
-                <div>Register Page Placeholder</div>
-              </PublicRoute>
-            ),
+            lazy: async () => {
+              const m = await import("../components/forms/auth/RegisterForm.jsx");
+              return {
+                Component: () => (
+                  <PublicRoute>
+                    <m.default />
+                  </PublicRoute>
+                ),
+              };
+            },
+          },
+          {
+            path: 'forgot-password',
+            lazy: async () => {
+              const m = await import("../pages/ForgotPassword.jsx");
+              return {
+                Component: () => (
+                  <PublicRoute>
+                    <m.default />
+                  </PublicRoute>
+                ),
+              };
+            },
+          },
+          {
+            path: 'reset-password',
+            lazy: async () => {
+              const m = await import("../pages/ForgotPassword.jsx");
+              return {
+                Component: () => (
+                  <PublicRoute>
+                    <m.default />
+                  </PublicRoute>
+                ),
+              };
+            },
           },
         ],
       },
@@ -48,14 +83,28 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'dashboard',
-            element: (
-              <ProtectedRoute>
-                 {/* Lazy load dashboard to avoid circular dependencies if any */}
-              </ProtectedRoute>
-            ),
-             lazy: async () => {
+            lazy: async () => {
               const m = await import('../pages/Dashboard.jsx');
-              return { Component: (props) => <ProtectedRoute><m.default {...props} /></ProtectedRoute> };
+              return {
+                Component: () => (
+                  <ProtectedRoute>
+                    <m.default />
+                  </ProtectedRoute>
+                ),
+              };
+            },
+          },
+          {
+            path: 'users',
+            lazy: async () => {
+              const m = await import('../pages/UsersPage.jsx');
+              return {
+                Component: () => (
+                  <ProtectedRoute>
+                    <m.default />
+                  </ProtectedRoute>
+                ),
+              };
             },
           },
         ],
@@ -65,8 +114,8 @@ const router = createBrowserRouter([
   {
     path: '*',
     lazy: async () => {
-        const m = await import('../pages/NotFound.jsx');
-        return { Component: m.default };
+      const m = await import('../pages/NotFound.jsx');
+      return { Component: m.default };
     },
   },
 ]);

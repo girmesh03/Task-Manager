@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import softDeletePlugin from './plugins/softDelete.js';
 import { USER_ROLES, LENGTH_LIMITS } from '../utils/constants.js';
 
@@ -172,6 +173,7 @@ userSchema.index({ isHod: 1 });
 
 // Plugins
 userSchema.plugin(softDeletePlugin);
+userSchema.plugin(mongoosePaginate);
 
 // Pre-save hooks
 userSchema.pre('save', async function () {
@@ -180,21 +182,19 @@ userSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, 12);
   }
 
-  // Set isPlatformUser based on organization (logic deferred to controller/service usually,
-  // but here we can check if organization is platform org if we populate it,
-  // or rely on controller setting it correctly initially.)
-  // The prompt says "set isPlatformUser based on organization".
-  // Since we don't have the org doc here easily without query, and immutable is true,
-  // we assume it's set correctly at creation by controller.)
-
-  // Set isHod based on role (Prompt requirement)
-  // Logic: If role is NOT Manager/Admin/SuperAdmin, they probably shouldn't be HOD.
-  // But strictly, "set isHod based on role" might mean "If role is X, set isHod=true".
-  // Given the ambiguity, we'll enforce that only Managers/Admins can be HODs,
-  // but we won't auto-set it to true just because they are Managers (as there can be multiple).
-  // We'll leave it as manual set, but maybe validate it?
-  // For now, we'll skip auto-setting isHod to avoid overwriting manual intent,
-  // unless the prompt implies strict mapping.
+  // Auto-set isPlatformUser based on organization.isPlatformOrg
+  if (this.isNew && this.organization) {
+    try {
+      const Organization = mongoose.model('Organization');
+      const org = await Organization.findById(this.organization);
+      if (org) {
+        this.isPlatformUser = org.isPlatformOrg;
+      }
+    } catch (error) {
+      // If organization lookup fails, default to false
+      // This can happen in test scenarios with invalid org IDs
+    }
+  }
 });
 
 // Instance methods

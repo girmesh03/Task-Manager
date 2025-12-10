@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import softDeletePlugin from './plugins/softDelete.js';
 import { LENGTH_LIMITS } from '../utils/constants.js';
 
@@ -47,6 +48,7 @@ departmentSchema.index(
 
 // Plugins
 departmentSchema.plugin(softDeletePlugin);
+departmentSchema.plugin(mongoosePaginate);
 
 // Pre-save hooks
 departmentSchema.pre('save', async function () {

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import softDeletePlugin from './plugins/softDelete.js';
 import { INDUSTRIES, LENGTH_LIMITS } from '../utils/constants.js';
 
@@ -101,10 +102,23 @@ organizationSchema.index({ isPlatformOrg: 1 });
 
 // Plugins
 organizationSchema.plugin(softDeletePlugin);
+organizationSchema.plugin(mongoosePaginate);
 
 // Pre-save hooks
 organizationSchema.pre('save', async function () {
-  if (this.isNew && this.createdBy) {
+  // Enforce only ONE platform organization globally
+  if (this.isNew && this.isPlatformOrg) {
+    const existingPlatformOrg = await this.constructor.findOne({
+      isPlatformOrg: true,
+      isDeleted: false
+    });
+
+    if (existingPlatformOrg) {
+      throw new Error('Only one platform organization is allowed. A platform organization already exists.');
+    }
+  }
+
+  if (this.createdBy) {
     // Validate createdBy belongs to this organization (logic to be implemented if needed,
     // but circular dependency prevents checking User model here easily without careful handling)
     // For now, we assume controller handles the logic of ensuring the creator is valid.

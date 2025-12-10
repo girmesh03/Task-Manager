@@ -69,6 +69,21 @@ export const ATTACHMENT_TYPES = {
 
 export const ATTACHMENT_TYPES_ARRAY = Object.values(ATTACHMENT_TYPES);
 
+// Task Activity Types
+export const TASK_ACTIVITY_TYPES = {
+  STATUS_CHANGED: 'Status Changed',
+  ASSIGNED: 'Assigned',
+  PRIORITY_CHANGED: 'Priority Changed',
+  COST_UPDATED: 'Cost Updated',
+  MATERIAL_ADDED: 'Material Added',
+  MATERIAL_REMOVED: 'Material Removed',
+  COMMENT_ADDED: 'Comment Added',
+  ATTACHMENT_ADDED: 'Attachment Added',
+  OTHER: 'Other'
+};
+
+export const TASK_ACTIVITY_TYPES_ARRAY = Object.values(TASK_ACTIVITY_TYPES);
+
 // Notification Types
 export const NOTIFICATION_TYPES = {
   CREATED: 'Created',
@@ -111,13 +126,13 @@ export const PAGINATION = {
 
 // Validation Limits
 export const LIMITS = {
-  MAX_TAGS: 5,
-  MAX_WATCHERS: 20,
+  MAX_TAGS: 10,
+  MAX_WATCHERS: 10,
   MAX_ASSIGNEES: 20,
-  MAX_MATERIALS: 20,
-  MAX_ATTACHMENTS: 10,
+  MAX_MATERIALS: 50,
+  MAX_ATTACHMENTS: 20,
   MAX_SKILLS: 10,
-  MAX_MENTIONS: 5,
+  MAX_MENTIONS: 10,
   MAX_COMMENT_DEPTH: 3,
   MAX_COST_HISTORY: 200,
   MAX_BULK_NOTIFICATIONS: 500

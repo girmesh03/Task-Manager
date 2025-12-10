@@ -48,3 +48,23 @@ export const setTokenCookies = (res, access_token, refresh_token) => {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
+
+/**
+ * Clear Token Cookies
+ * @param {Object} res - Express Response Object
+ */
+export const clearTokenCookies = (res) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  res.clearCookie('access_token', {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'strict',
+  });
+
+  res.clearCookie('refresh_token', {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'strict',
+  });
+};

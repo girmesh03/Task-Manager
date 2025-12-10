@@ -28,7 +28,9 @@ describe('Utils: constants', () => {
 
   test('should export LIMITS', () => {
     expect(constants.LIMITS).toBeDefined();
-    expect(constants.LIMITS.MAX_TAGS).toBe(5);
+    expect(constants.LIMITS.MAX_TAGS).toBe(10);
+    expect(constants.LIMITS.MAX_WATCHERS).toBe(10);
+    expect(constants.LIMITS.MAX_MATERIALS).toBe(50);
   });
 
   test('should export AUTH constants', () => {

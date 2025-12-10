@@ -152,7 +152,28 @@ baseTaskSchema.statics.softDeleteByIdWithCascade = async function (
   await this.softDeleteById(id, { session, deletedBy });
 
   // Cascade delete related resources
-  // TaskActivity, TaskComment, etc. will be handled by their respective cascade logic
+
+  // 1. TaskComments (use their cascade method to handle nested comments)
+  const TaskComment = mongoose.model('TaskComment');
+  // Only delete root comments, let them cascade to children
+  const comments = await TaskComment.find({ task: id, parent: null, isDeleted: false }).session(session);
+  for (const comment of comments) {
+    await TaskComment.softDeleteByIdWithCascade(comment._id, { session, deletedBy });
+  }
+
+  // 2. TaskActivities
+  const TaskActivity = mongoose.model('TaskActivity');
+  const activities = await TaskActivity.find({ task: id, isDeleted: false }).session(session);
+  for (const activity of activities) {
+    await activity.softDelete({ session, deletedBy });
+  }
+
+  // 3. Notifications (related to this task)
+  const Notification = mongoose.model('Notification');
+  const notifications = await Notification.find({ relatedTask: id, isDeleted: false }).session(session);
+  for (const notification of notifications) {
+    await notification.softDelete({ session, deletedBy });
+  }
 };
 
 const BaseTask = mongoose.model('BaseTask', baseTaskSchema);

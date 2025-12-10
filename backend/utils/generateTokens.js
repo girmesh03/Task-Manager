@@ -1,25 +1,42 @@
 import jwt from 'jsonwebtoken';
+import { AUTH } from './constants.js';
 
-const generateAccess_token = (userId) => {
+/**
+ * Generate Access Token
+ * @param {string} userId - User ID
+ * @returns {string} - JWT Access Token
+ */
+export const generateAccess_token = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+    expiresIn: AUTH.ACCESS_TOKEN_EXPIRY,
   });
 };
 
-const generateRefresh_token = (userId) => {
+/**
+ * Generate Refresh Token
+ * @param {string} userId - User ID
+ * @returns {string} - JWT Refresh Token
+ */
+export const generateRefresh_token = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+    expiresIn: AUTH.REFRESH_TOKEN_EXPIRY,
   });
 };
 
-const setTokenCookies = (res, access_token, refresh_token) => {
+/**
+ * Set Token Cookies
+ * @param {Object} res - Express Response Object
+ * @param {string} access_token - Access Token
+ * @param {string} refresh_token - Refresh Token
+ */
+export const setTokenCookies = (res, access_token, refresh_token) => {
   const isProduction = process.env.NODE_ENV === 'production';
 
   // Access Token Cookie
   res.cookie('access_token', access_token, {
     httpOnly: true,
-    secure: isProduction, // Use secure cookies in production
-    sameSite: 'strict', // Prevent CSRF
+    secure: isProduction,
+    sameSite: 'strict',
     maxAge: 15 * 60 * 1000, // 15 minutes
   });
 
@@ -30,29 +47,4 @@ const setTokenCookies = (res, access_token, refresh_token) => {
     sameSite: 'strict',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
-};
-
-const clearTokenCookies = (res) => {
-  const isProduction = process.env.NODE_ENV === 'production';
-
-  res.cookie('access_token', '', {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: 'strict',
-    expires: new Date(0),
-  });
-
-  res.cookie('refresh_token', '', {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: 'strict',
-    expires: new Date(0),
-  });
-};
-
-export {
-  generateAccess_token,
-  generateRefresh_token,
-  setTokenCookies,
-  clearTokenCookies,
 };

@@ -2,7 +2,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import app from './app.js';
 import connectDB from './config/db.js';
-import { logger } from './utils/logger.js';
+import logger from './utils/logger.js';
 import validateEnv from './utils/validateEnv.js';
 import allowedOrigins from './config/allowedOrigins.js';
 

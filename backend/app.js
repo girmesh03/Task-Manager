@@ -19,7 +19,7 @@ import corsOptions from './config/corsOptions.js';
 import globalErrorHandler from './errorHandler/ErrorController.js';
 import CustomError from './errorHandler/CustomError.js';
 import { apiLimiter } from './middlewares/rateLimiter.js';
-import { logger } from './utils/logger.js';
+import logger from './utils/logger.js';
 
 // Configure dayjs
 dayjs.extend(utc);

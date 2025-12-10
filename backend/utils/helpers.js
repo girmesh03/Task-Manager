@@ -31,6 +31,8 @@ export const validateObjectId = (id) => {
   return mongoose.Types.ObjectId.isValid(id);
 };
 
+export const isValidObjectId = validateObjectId;
+
 export const sanitizeUser = (user) => {
   if (!user) return null;
 
@@ -50,4 +52,9 @@ export const sanitizeUser = (user) => {
 
 export const generateRandomToken = () => {
   return crypto.randomBytes(32).toString('hex');
+};
+
+export const generateEmployeeId = () => {
+  // Random 4-digit number between 1000 and 9999
+  return Math.floor(1000 + Math.random() * 9000).toString();
 };

@@ -9,9 +9,9 @@
     "dev": "nodemon server.js",
     "server": "nodemon server.js",
     "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest",
-    "test:unit": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/unit",
-    "test:integration": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/integration",
-    "test:property": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest __tests__/property"
+    "test:unit": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests/unit",
+    "test:integration": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests/integration",
+    "test:property": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests/property"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
+    "envalid": "^8.1.1",
     "express": "^4.22.1",
     "express-async-handler": "^1.2.0",
     "express-mongo-sanitize": "^2.2.0",

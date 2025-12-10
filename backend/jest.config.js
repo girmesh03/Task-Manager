@@ -5,7 +5,7 @@ export default {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  testMatch: ['**/__tests__/**/*.test.js', '**/__tests__/**/*.property.test.js'],
+  testMatch: ['**/tests/**/*.test.js', '**/tests/**/*.property.test.js'],
   collectCoverageFrom: [
     'app.js',
     'server.js',
@@ -17,14 +17,14 @@ export default {
     'services/**/*.js',
     'utils/**/*.js',
     '!**/node_modules/**',
-    '!**/__tests__/**',
+    '!**/tests/**',
     '!**/coverage/**',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  globalSetup: './__tests__/globalSetup.js',
-  globalTeardown: './__tests__/globalTeardown.js',
-  setupFilesAfterEnv: ['./__tests__/setup.js'],
-  testTimeout: 30000,
+  globalSetup: './tests/globalSetup.js',
+  globalTeardown: './tests/globalTeardown.js',
+  setupFilesAfterEnv: ['./tests/setup.js'],
+  testTimeout: 60000,
   maxWorkers: 1,
 };

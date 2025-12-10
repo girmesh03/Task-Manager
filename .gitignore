@@ -1,20 +1,20 @@
 # .kiro
-.kiro/
+# .kiro/
 
 # docs
-docs/
+# docs/
 
-Environment files
-.env
-.env.local
-.env.production
-.env.development
-*/*/\.env
-*/.env
-**/.env
+# Environment files
+# .env
+# .env.local
+# .env.production
+# .env.development
+# */*/\.env
+# */.env
+# **/.env
 
 # mock files
-backend/mock
+# backend/mock
 
 # Build outputs
 node_modules

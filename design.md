@@ -1856,7 +1856,7 @@ sudo certbot renew --dry-run
 
 4. **Decision and Action**:
 
-   - **If code exists and meets requirements**: Keep as is, document validation
+   - **If code exists and meets requirements**: Keep as is
    - **If code exists but doesn't meet requirements**: Correct it to match specs exactly
    - **If code doesn't exist**: Implement according to requirements and design
    - **Never create duplicate files** - always check if file already exists first
@@ -1883,7 +1883,7 @@ sudo certbot renew --dry-run
    - All tests passing (100% pass rate)
    - Coverage requirements met (80%+ statements, 75%+ branches)
    - No linting errors
-   - No TypeScript errors (if applicable)
+   - Ensure there is no any kind of errors
    - Code follows established patterns
 
 8. **Merge to Main**:

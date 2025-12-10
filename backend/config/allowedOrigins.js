@@ -3,6 +3,15 @@ const allowedOrigins = [
   'http://localhost:5173',
   process.env.CLIENT_URL,
   ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [])
-].filter(Boolean);
+].filter(origin => {
+  if (!origin) return false;
+  if (origin === '*') return false;
+  try {
+    new URL(origin);
+    return true;
+  } catch {
+    return false;
+  }
+});
 
 export default allowedOrigins;

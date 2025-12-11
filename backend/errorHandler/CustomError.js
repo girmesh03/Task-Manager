@@ -28,6 +28,10 @@ class CustomError extends Error {
     return new CustomError(message, 409, errorCode);
   }
 
+  static gone(message = 'Resource Gone', errorCode = 'GONE') {
+    return new CustomError(message, 410, errorCode);
+  }
+
   static validationError(message = 'Validation Error', errorCode = 'VALIDATION_ERROR') {
     return new CustomError(message, 422, errorCode);
   }

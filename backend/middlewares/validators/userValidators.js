@@ -1,6 +1,6 @@
 import { body, query, param } from 'express-validator';
 import { User, Department } from '../../models/index.js';
-import validate from '../../utils/validate.js';
+import validate from './validation.js';
 import { USER_ROLES, LENGTH_LIMITS, PAGINATION } from '../../utils/constants.js';
 
 const validateCreateUser = [
@@ -8,24 +8,32 @@ const validateCreateUser = [
     .trim()
     .notEmpty()
     .withMessage('First name is required')
+    .isAlpha()
+    .withMessage('First name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX })
     .withMessage(`First name cannot exceed ${LENGTH_LIMITS.USER_NAME_MAX} characters`),
   body('lastName')
     .trim()
     .notEmpty()
     .withMessage('Last name is required')
+    .isAlpha()
+    .withMessage('Last name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX })
     .withMessage(`Last name cannot exceed ${LENGTH_LIMITS.USER_NAME_MAX} characters`),
   body('email')
     .trim()
+    .toLowerCase()
     .notEmpty()
     .withMessage('Email is required')
     .isEmail()
     .withMessage('Please provide a valid email')
     .isLength({ max: LENGTH_LIMITS.EMAIL_MAX })
     .withMessage(`Email cannot exceed ${LENGTH_LIMITS.EMAIL_MAX} characters`)
-    .custom(async (value) => {
-      const user = await User.findOne({ email: value }).withDeleted();
+    .custom(async (value, { req }) => {
+      const user = await User.findOne({
+        email: value,
+        organization: req.user.organization
+      }).withDeleted();
       if (user) {
         throw new Error('Email already exists');
       }
@@ -48,7 +56,10 @@ const validateCreateUser = [
     .isMongoId()
     .withMessage('Invalid department ID')
     .custom(async (value, { req }) => {
-      const dept = await Department.findById(value).withDeleted();
+      const dept = await Department.findOne({
+        _id: value,
+        organization: req.user.organization
+      }).withDeleted();
       if (!dept) {
         throw new Error('Department not found');
       }
@@ -118,10 +129,10 @@ const validateGetAllUsers = [
       req.query.department = value;
       return true;
     }),
-  query('includeDeleted')
+  query('deleted')
     .optional()
     .isBoolean()
-    .withMessage('includeDeleted must be a boolean'),
+    .withMessage('deleted must be a boolean'),
   validate,
 ];
 
@@ -129,8 +140,11 @@ const validateGetUser = [
   param('userId')
     .isMongoId()
     .withMessage('Invalid user ID')
-    .custom(async (value) => {
-      const user = await User.findById(value).withDeleted();
+    .custom(async (value, { req }) => {
+      const user = await User.findOne({
+        _id: value,
+        organization: req.user.organization
+      }).withDeleted();
       if (!user) {
         throw new Error('User not found');
       }
@@ -143,8 +157,11 @@ const validateUpdateUser = [
   param('userId')
     .isMongoId()
     .withMessage('Invalid user ID')
-    .custom(async (value) => {
-      const user = await User.findById(value).withDeleted();
+    .custom(async (value, { req }) => {
+      const user = await User.findOne({
+        _id: value,
+        organization: req.user.organization
+      }).withDeleted();
       if (!user) {
         throw new Error('User not found');
       }
@@ -155,22 +172,28 @@ const validateUpdateUser = [
     .trim()
     .notEmpty()
     .withMessage('First name cannot be empty')
+    .isAlpha()
+    .withMessage('First name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX }),
   body('lastName')
     .optional()
     .trim()
     .notEmpty()
     .withMessage('Last name cannot be empty')
+    .isAlpha()
+    .withMessage('Last name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX }),
   body('email')
     .optional()
     .trim()
+    .toLowerCase()
     .isEmail()
     .withMessage('Invalid email')
     .isLength({ max: LENGTH_LIMITS.EMAIL_MAX })
     .custom(async (value, { req }) => {
       const user = await User.findOne({
         email: value,
+        organization: req.user.organization,
         _id: { $ne: req.params.userId }
       }).withDeleted();
       if (user) {
@@ -187,7 +210,10 @@ const validateUpdateUser = [
     .isMongoId()
     .withMessage('Invalid department ID')
     .custom(async (value, { req }) => {
-      const dept = await Department.findById(value).withDeleted();
+      const dept = await Department.findOne({
+        _id: value,
+        organization: req.user.organization
+      }).withDeleted();
       if (!dept) {
         throw new Error('Department not found');
       }
@@ -220,20 +246,26 @@ const validateUpdateProfile = [
     .optional()
     .trim()
     .notEmpty()
+    .isAlpha()
+    .withMessage('First name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX }),
   body('lastName')
     .optional()
     .trim()
     .notEmpty()
+    .isAlpha()
+    .withMessage('Last name must contain only alphabets')
     .isLength({ max: LENGTH_LIMITS.USER_NAME_MAX }),
   body('email')
     .optional()
     .trim()
+    .toLowerCase()
     .isEmail()
     .isLength({ max: LENGTH_LIMITS.EMAIL_MAX })
     .custom(async (value, { req }) => {
       const user = await User.findOne({
         email: value,
+        organization: req.user.organization,
         _id: { $ne: req.user._id }
       }).withDeleted();
       if (user) {

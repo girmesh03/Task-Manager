@@ -175,6 +175,24 @@ export const TTL = {
   NOTIFICATION: 30
 };
 
+// Currencies
+export const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CNY', 'INR'];
+
+// Task Activity Parent Models
+export const TASK_ACTIVITY_PARENT_MODELS = ['AssignedTask', 'ProjectTask'];
+
+// Task Comment Parent Models
+export const TASK_COMMENT_PARENT_MODELS = ['RoutineTask', 'AssignedTask', 'ProjectTask', 'TaskActivity', 'TaskComment'];
+
+// Routine Task Status (Subset of Task Status)
+export const ROUTINE_TASK_STATUS = [TASK_STATUS.TO_DO, TASK_STATUS.COMPLETED];
+
+// Routine Task Priority (Subset of Task Priority)
+export const ROUTINE_TASK_PRIORITY = [TASK_PRIORITY.LOW, TASK_PRIORITY.MEDIUM, TASK_PRIORITY.HIGH];
+
+// Head of Department Roles
+export const HEAD_OF_DEPARTMENT_ROLES = [USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.MANAGER];
+
 // Auth Constants
 export const AUTH = {
   ACCESS_TOKEN_EXPIRY: '15m',

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Organization from '../../models/Organization.js';
 import Department from '../../models/Department.js';
 import User from '../../models/User.js';
+import Vendor from '../../models/Vendor.js';
 import BaseTask from '../../models/BaseTask.js';
 import ProjectTask from '../../models/ProjectTask.js';
 import RoutineTask from '../../models/RoutineTask.js';
@@ -15,6 +16,7 @@ describe('Task Models (Discriminator Pattern)', () => {
   let testDept;
   let testUser;
   let testMaterial;
+  let testVendor;
 
   beforeEach(async () => {
     // Create test organization
@@ -51,6 +53,12 @@ describe('Task Models (Discriminator Pattern)', () => {
       department: testDept._id,
       createdBy: testUser._id,
     });
+
+    // Create test vendor for ProjectTask
+    testVendor = await Vendor.create({
+      name: 'Test Vendor',
+      organization: testOrg._id,
+    });
   });
 
   describe('ProjectTask', () => {
@@ -61,10 +69,11 @@ describe('Task Models (Discriminator Pattern)', () => {
         organization: testOrg._id,
         department: testDept._id,
         createdBy: testUser._id,
+        vendor: testVendor._id,
         estimatedCost: 1000,
         actualCost: 800,
         startDate: new Date('2025-01-01'),
-        endDate: new Date('2025-01-31'),
+        dueDate: new Date('2025-01-31'),
       });
 
       expect(projectTask._id).toBeDefined();
@@ -83,8 +92,9 @@ describe('Task Models (Discriminator Pattern)', () => {
           organization: testOrg._id,
           department: testDept._id,
           createdBy: testUser._id,
+          vendor: testVendor._id,
           startDate: new Date('2025-01-31'),
-          endDate: new Date('2025-01-01'),
+          dueDate: new Date('2025-01-01'),
         })
       ).rejects.toThrow('End date must be after start date');
     });
@@ -97,6 +107,7 @@ describe('Task Models (Discriminator Pattern)', () => {
           organization: testOrg._id,
           department: testDept._id,
           createdBy: testUser._id,
+          vendor: testVendor._id,
           watchers,
         })
       ).rejects.toThrow();
@@ -110,6 +121,7 @@ describe('Task Models (Discriminator Pattern)', () => {
           organization: testOrg._id,
           department: testDept._id,
           createdBy: testUser._id,
+          vendor: testVendor._id,
           tags,
         })
       ).rejects.toThrow();
@@ -221,6 +233,7 @@ describe('Task Models (Discriminator Pattern)', () => {
           organization: anotherOrg._id,
           department: testDept._id, // Belongs to testOrg, not anotherOrg
           createdBy: testUser._id,
+          vendor: testVendor._id,
         })
       ).rejects.toThrow('Department does not belong to the specified organization');
     });
@@ -231,6 +244,7 @@ describe('Task Models (Discriminator Pattern)', () => {
         organization: testOrg._id,
         department: testDept._id,
         createdBy: testUser._id,
+        vendor: testVendor._id,
       });
 
       await task.softDelete();

@@ -18,7 +18,7 @@ Branch: `phase-1-backend-core`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-1-backend-core`
 2. **Search**: `grepSearch` and `readFile` to find existing config/utils
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -151,7 +151,7 @@ Branch: `phase-2-mongoose-models`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-2-mongoose-models`
 2. **Search**: `grepSearch` and `readFile` to find existing models
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -217,7 +217,7 @@ Branch: `phase-3-error-handling-middleware`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-3-error-handling-middleware`
 2. **Search**: `grepSearch` and `readFile` to find existing middleware
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -296,7 +296,7 @@ Branch: `phase-4-services-templates-server`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-4-services-templates-server`
 2. **Search**: `grepSearch` and `readFile` to find existing services
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -362,7 +362,7 @@ Branch: `phase-5-routes-validators-controllers`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-5-routes-validators-controllers`
 2. **Search**: `grepSearch` and `readFile` to find existing routes/controllers
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -538,7 +538,7 @@ Branch: `phase-6-test-infrastructure-seed`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-6-test-infrastructure-seed`
 2. **Search**: `grepSearch` and `readFile` to find existing test setup
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -590,7 +590,7 @@ Branch: `phase-7-complete-backend-validation`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-7-complete-backend-validation`
 2. **Search**: `grepSearch` and `readFile` to find existing tests
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -644,7 +644,7 @@ Branch: `phase-8-frontend-redux-routing`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-8-frontend-redux-routing`
 2. **Search**: `grepSearch` and `readFile` to find existing redux/router
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -727,7 +727,7 @@ Branch: `phase-9-frontend-common-components`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-9-frontend-common-components`
 2. **Search**: `grepSearch` and `readFile` to find existing components
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -833,7 +833,7 @@ Branch: `phase-10-frontend-auth`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-10-frontend-auth`
 2. **Search**: `grepSearch` and `readFile` to find existing auth UI
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -886,7 +886,7 @@ Branch: `phase-11-frontend-resource-management`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-11-frontend-resource-management`
 2. **Search**: `grepSearch` and `readFile` to find existing resource UI
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -974,7 +974,7 @@ Branch: `phase-12-frontend-task-management`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-12-frontend-task-management`
 2. **Search**: `grepSearch` and `readFile` to find existing task UI
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -1047,7 +1047,7 @@ Branch: `phase-13-frontend-notifications-realtime`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-13-frontend-notifications-realtime`
 2. **Search**: `grepSearch` and `readFile` to find existing notification UI
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -1098,7 +1098,7 @@ Branch: `phase-14-frontend-dashboard-files`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-14-frontend-dashboard-files`
 2. **Search**: `grepSearch` and `readFile` to find existing dashboard UI
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)
@@ -1148,7 +1148,7 @@ Branch: `phase-15-frontend-finalization`
 #### Critical Implementation Workflow (MUST FOLLOW)
 1. **Branch**: Checkout `phase-15-frontend-finalization`
 2. **Search**: `grepSearch` and `readFile` to find existing code
-3. **Analysis**: Deeply analyze each file, extract logic/patterns
+3. **Analysis**: Deeply analyze each file both the backend and client directories, extract logic/patterns
 4. **Validate**: Compare against all 6 docs (requirements.md, design.md, product.md, structure.md, tech.md, timezone-doc.md)
 5. **Implement**: Correct/Create code matching specs exactly
 6. **Test**: Write/Run unit tests (Real MongoDB, No Skips)

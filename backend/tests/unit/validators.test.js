@@ -117,7 +117,7 @@ describe('Validators', () => {
           description: 'Description',
           taskType: 'ProjectTask',
           startDate: new Date().toISOString(),
-          endDate: new Date(Date.now() + 86400000).toISOString(),
+          dueDate: new Date(Date.now() + 86400000).toISOString(),
           priority: 'High'
         });
       expect(res.status).toBe(200);

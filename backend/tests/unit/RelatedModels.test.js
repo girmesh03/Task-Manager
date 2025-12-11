@@ -8,12 +8,14 @@ import TaskActivity from '../../models/TaskActivity.js';
 import TaskComment from '../../models/TaskComment.js';
 import Attachment from '../../models/Attachment.js';
 import Notification from '../../models/Notification.js';
+import Vendor from '../../models/Vendor.js';
 import { INDUSTRIES, TASK_ACTIVITY_TYPES, NOTIFICATION_TYPES } from '../../utils/constants.js';
 
 describe('Related Models (Activity, Comment, Attachment, Notification)', () => {
   let testOrg;
   let testDept;
   let testUser;
+  let testVendor;
   let testProjectTask;
   let testRoutineTask;
 
@@ -39,11 +41,17 @@ describe('Related Models (Activity, Comment, Attachment, Notification)', () => {
       department: testDept._id,
     });
 
+    testVendor = await Vendor.create({
+      name: 'Related Test Vendor',
+      organization: testOrg._id,
+    });
+
     testProjectTask = await ProjectTask.create({
       title: 'Test Project Task',
       organization: testOrg._id,
       department: testDept._id,
       createdBy: testUser._id,
+      vendor: testVendor._id,
     });
 
     testRoutineTask = await RoutineTask.create({
@@ -262,6 +270,7 @@ describe('Related Models (Activity, Comment, Attachment, Notification)', () => {
         message: 'New task created',
         relatedTask: testProjectTask._id,
         organization: testOrg._id,
+        department: testDept._id,
       });
 
       expect(notification._id).toBeDefined();
@@ -276,6 +285,7 @@ describe('Related Models (Activity, Comment, Attachment, Notification)', () => {
         type: NOTIFICATION_TYPES.MENTION,
         message: 'You were mentioned in a comment',
         organization: testOrg._id,
+        department: testDept._id,
       });
 
       expect(notification.isRead).toBe(false);
@@ -287,6 +297,7 @@ describe('Related Models (Activity, Comment, Attachment, Notification)', () => {
         type: NOTIFICATION_TYPES.UPDATED,
         message: 'Task updated',
         organization: testOrg._id,
+        department: testDept._id,
       });
 
       await notification.softDelete();

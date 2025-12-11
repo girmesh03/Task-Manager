@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach } from '@jest/globals';
 import Organization from '../../models/Organization.js';
 import Department from '../../models/Department.js';
 import User from '../../models/User.js';
+import Vendor from '../../models/Vendor.js';
 import ProjectTask from '../../models/ProjectTask.js';
 import TaskActivity from '../../models/TaskActivity.js';
 import TaskComment from '../../models/TaskComment.js';
@@ -12,6 +13,7 @@ describe('Cascade Delete Integration', () => {
   let testOrg;
   let testDept;
   let testUser;
+  let testVendor;
   let testTask;
 
   beforeEach(async () => {
@@ -37,12 +39,19 @@ describe('Cascade Delete Integration', () => {
       department: testDept._id,
     });
 
+    // Create test vendor
+    testVendor = await Vendor.create({
+      name: 'Cascade Test Vendor',
+      organization: testOrg._id,
+    });
+
     // Create a Task
     testTask = await ProjectTask.create({
       title: 'Task to Delete',
       organization: testOrg._id,
       department: testDept._id,
       createdBy: testUser._id,
+      vendor: testVendor._id,
     });
   });
 
@@ -85,6 +94,7 @@ describe('Cascade Delete Integration', () => {
       message: 'Notification to delete',
       relatedTask: testTask._id,
       organization: testOrg._id,
+      department: testDept._id,
     });
 
     // 2. Perform Cascade Delete

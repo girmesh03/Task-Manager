@@ -59,3 +59,25 @@
   - ✅ Rate Limiting (Validation)
   - ✅ Validators (Auth, User, Organization, Department, Task, Material, Vendor, Attachment, Notification)
   - ✅ Unit & Integration Tests
+
+## Phase 4: Services, Templates, and Server Setup
+- **Status**: ✅ Complete
+- **Branch**: `phase-4-services-templates-server`
+- **Start Date**: 2025-12-11
+- **Complete Date**: 2025-12-11
+- **Tasks**:
+  - ✅ Services (emailService.js, notificationService.js)
+  - ✅ Socket.IO Utilities (socketInstance.js, socket.js, socketEmitter.js)
+  - ✅ Email Templates (emailTemplates.js - welcome, task, mention, passwordReset, announcement)
+  - ✅ Application Setup (app.js verified, server.js updated with graceful shutdown)
+  - ✅ Unit Tests (7 passing for email templates)
+
+**Files Implemented (Phase 4)**:
+1. ✅ services/emailService.js - Gmail SMTP with Nodemailer
+2. ✅ services/notificationService.js - Notification creation + Socket.IO emission
+3. ✅ utils/socketInstance.js - Socket.IO singleton
+4. ✅ utils/socket.js - Connection handlers, auth, room management
+5. ✅ utils/socketEmitter.js - Event emission helpers
+6. ✅ templates/emailTemplates.js - HTML templates
+7. ✅ server.js - Updated with email init, graceful shutdown
+

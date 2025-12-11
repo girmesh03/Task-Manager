@@ -229,17 +229,17 @@ const projectTaskValidators = [
       }
       return true;
     }),
-  body('endDate')
+  body('dueDate')
     .if(body('taskType').equals(TASK_TYPES.PROJECT_TASK))
     .exists({ checkFalsy: true })
-    .withMessage('End date is required')
+    .withMessage('Due date is required')
     .bail()
     .isISO8601()
-    .withMessage('End date must be a valid ISO 8601 date')
+    .withMessage('Due date must be a valid ISO 8601 date')
     .bail()
-    .custom((endDate, { req }) => {
-      if (!isStartDateBeforeDueDate(req.body.startDate, endDate)) {
-        throw new Error('End date must be greater than or equal to start date');
+    .custom((dueDate, { req }) => {
+      if (!isStartDateBeforeDueDate(req.body.startDate, dueDate)) {
+        throw new Error('Due date must be greater than or equal to start date');
       }
       return true;
     }),

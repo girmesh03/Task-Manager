@@ -48,6 +48,11 @@ const notificationSchema = new mongoose.Schema(
       ref: 'Organization',
       required: [true, 'Organization is required'],
     },
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Department',
+      required: [true, 'Department is required'],
+    },
   },
   {
     timestamps: true,
